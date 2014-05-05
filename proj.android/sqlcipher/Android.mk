@@ -1,0 +1,23 @@
+LOCAL_PATH := $(call my-dir)/../
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := sqlcipher_static
+
+LOCAL_MODULE_FILENAME := libsqlcipher
+
+LOCAL_SRC_FILES := ../src/sqlite3.c
+
+
+LOCAL_CFLAGS := -DSQLCIPHER_CRYPTO_LIBTOMCRYPT -DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2
+LOCAL_EXPORT_CFLAGS := -DSQLCIPHER_CRYPTO_LIBTOMCRYPT -DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=2
+
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../src/
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../src/ 
+LOCAL_ALLOW_UNDEFINED_SYMBOLS:=true 
+LOCAL_STATIC_LIBRARIES := libtomcrypt_static
+
+include $(BUILD_STATIC_LIBRARY)
+$(call import-add-path, $(LOCAL_PATH)/../../libtomcrypt/proj.android)
+$(call import-module,libtomcrypt)
